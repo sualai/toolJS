@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body,ul{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .wrapper{
+            width: 500px;
+            height: 500px;
+            position: relative;
+            
+
+        }
+        .wrapper .banner{
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+
+        }
+        .wrapper .banner ul{
+            width: 5000px;
+            height: 100%;
+        }
+        .wrapper .banner ul li{
+            float: left;
+            width: 500px;
+            height: 500px;
+
+        }
+        .wrapper .banner ul li a{
+            display: block;
+            width: 500px;
+            height: 500px;
+        }
+        .wrapper .banner ul li a img{
+            display: block;
+            width: 500px;
+            height: 500px;
+        }
+        .wrapper .point{
+            width: 150px;
+            margin: 0 auto;
+        }
+
+        .wrapper .point ul{
+            width: 150px;
+            position: absolute;
+            bottom: 50px;
+        }
+        .wrapper .point ul li{
+            float: left;
+            margin-left: 5px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #ccc;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+        .wrapper .point ul li.active{
+            background-color: orange;
+        }
+        .wrapper .btn{
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            width: 50px;
+            height: 50px;
+            border-left: 3px solid greenyellow;
+            border-bottom: 3px solid greenyellow;
+
+        }
+        .wrapper .left{
+            transform: rotate(45deg);
+            left: 20px;
+        }
+        .wrapper .right{
+            transform: rotate(-135deg);
+            right: 20px;
+        }
+    </style>
+    <title>轮播图</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="banner">
+            <ul>
+                <li><a href="javascript:;"><img src="../../images/loop1.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="../../images/loop2.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="../../images/loop3.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="../../images/loop4.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="../../images/loop5.jpg" alt=""></a></li>
+                <li><a href="javascript:;"><img src="../../images/loop1.jpg" alt=""></a></li>
+            </ul>
+        </div>
+        <div class="point">
+            <ul>
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="btn left"></div>
+        <div class="btn right"></div>
+
+    </div>
+    <script>
+        var banner = document.getElementsByClassName('banner')[0];
+        var ulBox = banner.getElementsByTagName('ul')[0]
+        var items = ulBox.getElementsByTagName('li');
+        var left = document.getElementsByClassName('left')[0]
+        var right = document.getElementsByClassName('right')[0];
+        var point = document.getElementsByClassName('point')[0]
+        var pointItems = point.getElementsByTagName('li');
+        var width = items[0].offsetWidth;
+        var picIndex = 0;
+        var pointsIndex = 0;
+        var pointLen = pointItems.length;
+        var picLen = items.length
+        function autoPlay(){
+            picIndex ++;
+            pointsIndex++;
+            if(picIndex >picLen -1){
+                picIndex = 1;
+                ulBox.style.marginLeft = 0;
+            }
+            if(pointsIndex > pointLen -1){
+                pointsIndex = 0;
+            }
+            heightLight(pointsIndex);
+            animate(ulBox,{marginLeft:-(picIndex * width)})
+        }
+     function heightLight(index){
+        for(var i =0 ; i < pointLen; i++){
+            pointItems[i].classList.remove('active');
+        }
+        pointItems[index].classList.add('active');
+    }
+    function animate(dom,option){
+        clearInterval(dom.timer);
+        dom.timer = setInterval(function(){
+            var flag = true;
+            for(var k in option){
+                var current = parseInt(getComputedStyle(dom,null)[k]);
+                var target = parseInt(option[k]);
+                var speed = (target - current)/5;
+                speed = speed>0?Math.ceil(speed):Math.floor(speed);
+                if(current != target){
+                    flag = false
+                }
+                dom.style[k] = current + speed +'px'; 
+            }
+            if(flag){
+             clearInterval(dom.timer);
+            return ;
+         }         
+        },30)       
+    }
+    var timer = setInterval(autoPlay,1000)
+    banner.onmouseenter = function(){      
+        clearInterval(timer);
+    }
+    banner.onmouseleave = function(){
+        clearInterval(timer)
+        timer = setInterval(autoPlay,1000)
+    }
+    for(var i = 0 ; i < pointLen ; i ++){
+        this.index =i 
+        pointItems[i].onclick = function(){
+            picIndex = this.index;
+            pointsIndex = this.index;
+            heightLight(pointsIndex)
+            animate(ulBox,{marginLeft:-(picIndex)*width});
+        }
+    }
+    </script>
+</body>
+</html>
