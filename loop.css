@@ -1,0 +1,81 @@
+   
+   body,ul{
+            padding: 0;
+            margin: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        .wrapper{
+            width: 500px;
+            height: 500px;
+            position: relative;
+            
+
+        }
+        .wrapper .banner{
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+
+        }
+        .wrapper .banner ul{
+            width: 5000px;
+            height: 100%;
+        }
+        .wrapper .banner ul li{
+            float: left;
+            width: 500px;
+            height: 500px;
+
+        }
+        .wrapper .banner ul li a{
+            display: block;
+            width: 500px;
+            height: 500px;
+        }
+        .wrapper .banner ul li a img{
+            display: block;
+            width: 500px;
+            height: 500px;
+        }
+        .wrapper .point{
+            width: 150px;
+            margin: 0 auto;
+        }
+
+        .wrapper .point ul{
+            width: 150px;
+            position: absolute;
+            bottom: 50px;
+        }
+        .wrapper .point ul li{
+            float: left;
+            margin-left: 5px;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #ccc;
+            background-color: #ccc;
+            border-radius: 50%;
+        }
+        .wrapper .point ul li.active{
+            background-color: orange;
+        }
+        .wrapper .btn{
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            width: 50px;
+            height: 50px;
+            border-left: 3px solid greenyellow;
+            border-bottom: 3px solid greenyellow;
+
+        }
+        .wrapper .left{
+            transform: rotate(45deg);
+            left: 20px;
+        }
+        .wrapper .right{
+            transform: rotate(-135deg);
+            right: 20px;
+        }
